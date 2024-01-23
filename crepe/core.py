@@ -4,6 +4,7 @@ from __future__ import print_function
 import os
 import re
 import sys
+from functools import cache
 
 from scipy.io import wavfile
 import numpy as np
@@ -21,7 +22,7 @@ models = {
 # the model is trained on 16kHz audio
 model_srate = 16000
 
-
+@cache
 def build_and_load_model(model_capacity):
     """
     Build the CNN model and load the weights
@@ -41,9 +42,9 @@ def build_and_load_model(model_capacity):
     model : tensorflow.keras.models.Model
         The pre-trained keras model loaded in memory
     """
-    from tensorflow.keras.layers import Input, Reshape, Conv2D, BatchNormalization
-    from tensorflow.keras.layers import MaxPool2D, Dropout, Permute, Flatten, Dense
-    from tensorflow.keras.models import Model
+    from keras.layers import Input, Reshape, Conv2D, BatchNormalization
+    from keras.layers import MaxPool2D, Dropout, Permute, Flatten, Dense
+    from keras.models import Model
 
     if models[model_capacity] is None:
         capacity_multiplier = {
