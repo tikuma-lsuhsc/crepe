@@ -205,7 +205,7 @@ def get_activation(audio, sr, model_capacity='full', center=True, step_size=10,
     frames = frames.transpose().copy()
 
     # normalize each frame -- this is expected by the model
-    frames = (frames - np.mean(frames, axis=1, keepdims=True)) / max(np.std(frames, axis=1, keepdims=True), 1e-8)
+    frames = (frames - np.mean(frames, axis=1, keepdims=True)) / np.maximum(np.std(frames, axis=1, keepdims=True), 1e-8)
 
     # run prediction and convert the frequency bin weights to Hz
     return model.predict(frames, verbose=verbose)
